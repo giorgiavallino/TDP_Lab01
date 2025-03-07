@@ -1,4 +1,5 @@
 from domanda import Domanda
+import random
 
 class Game:
 
@@ -24,15 +25,15 @@ class Game:
     def definizione_domanda(self):
         info_domande = []
         for i in range(0, len(self.domande), 7):
-            risposte_errate = []
+            risposte = []
             testo_domanda = self.domande[i]
             livello = self.domande[i+1]
             risposta_corretta = self.domande[i+2]
-            risposte_errate.append(self.domande[i+2])
-            risposte_errate.append(self.domande[i+3])
-            risposte_errate.append(self.domande[i+4])
-            risposte_errate.append(self.domande[i+5])
-            domanda = Domanda(testo_domanda, livello, risposta_corretta, risposte_errate)
+            risposte.append(self.domande[i+2])
+            risposte.append(self.domande[i+3])
+            risposte.append(self.domande[i+4])
+            risposte.append(self.domande[i+5])
+            domanda = Domanda(testo_domanda, livello, risposta_corretta, risposte)
             info_domande.append(domanda)
         self.domande = info_domande
         return self.domande
@@ -46,10 +47,9 @@ class Game:
 
     def mescolamento_risposte(self):
         for domanda in self.domande:
-            domanda.risposte = domanda.risposte.shuffle()
+            risposte_mescolate = sorted(domanda.risposte, key=lambda k: random.random())
+            domanda.risposte = risposte_mescolate
         return self.domande
-
-
 
 g = Game()
 print(g.lettura_domande())
