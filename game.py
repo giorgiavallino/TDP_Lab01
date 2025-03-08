@@ -54,10 +54,13 @@ class Game:
 
     def seleziona_domanda(self):
         domanda_selezionata = random.choices(self.domande, k=1)
-        return domanda_selezionata
+        self.domande = domanda_selezionata
+        return self.domande
 
     def definizione_domanda_selezionata(self, domanda_selezionata):
-        return domanda_selezionata[0] #bisogna spezzare la lista
+        for domanda in self.domande:
+            d = domanda.domanda
+        return d
 
 g = Game()
 print(g.lettura_domande())
