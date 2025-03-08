@@ -43,7 +43,8 @@ class Game:
         for domanda in self.domande:
             if domanda.livello == livello_corrente:
                 domande_possibili.append(domanda)
-        return domande_possibili
+        self.domande = domande_possibili
+        return self.domande
 
     def mescolamento_risposte(self):
         for domanda in self.domande:
@@ -51,9 +52,19 @@ class Game:
             domanda.risposte = risposte_mescolate
         return self.domande
 
+    def seleziona_domanda(self):
+        domanda_selezionata = random.choices(self.domande, k=1)
+        return domanda_selezionata
+
+    def definizione_domanda_selezionata(self, domanda_selezionata):
+        return domanda_selezionata[0] #bisogna spezzare la lista
+
 g = Game()
 print(g.lettura_domande())
 print(g.domande)
 print(g.definizione_domanda())
 print(g.scelta_domanda(0))
 print(g.mescolamento_risposte())
+g1 = (g.seleziona_domanda())
+print(g1)
+print(g.definizione_domanda_selezionata(g1))
