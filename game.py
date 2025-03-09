@@ -38,6 +38,15 @@ class Game:
         self.domande = info_domande
         return self.domande
 
+    def massimo_livello(self):
+        livello_massimo = 0
+        for domanda in self.domande:
+            if domanda.livello > livello_massimo:
+                livello_massimo = domanda.livello
+            else:
+                livello_massimo = livello_massimo
+        return livello_massimo
+
     def scelta_domanda(self, livello_corrente):
         domande_possibili = []
         for domanda in self.domande:
@@ -57,17 +66,30 @@ class Game:
         self.domande = domanda_selezionata
         return self.domande
 
-    def definizione_domanda_selezionata(self, domanda_selezionata):
+    def stampa_domanda_selezionata(self):
         for domanda in self.domande:
-            d = domanda.domanda
-        return d
+            print(f"Livello {domanda.livello}) {domanda.domanda}")
+            for i in range(0, len(domanda.risposte)):
+                print( f"{i+1}. {domanda.risposte[i]}")
 
-g = Game()
-print(g.lettura_domande())
-print(g.domande)
-print(g.definizione_domanda())
-print(g.scelta_domanda(0))
-print(g.mescolamento_risposte())
-g1 = (g.seleziona_domanda())
-print(g1)
-print(g.definizione_domanda_selezionata(g1))
+    def inserimento_input(self):
+        stringa = input("Inserisci la risposta: ")
+        if stringa == "1" or stringa == "2" or stringa == "3" or stringa == "4":
+            risposta = int(stringa)
+        else:
+            risposta = "La risposta inserita non è valida!"
+            print(risposta)
+        return risposta
+
+    def controllo_risposta(self, risposta):
+        continuo = True
+        if risposta != "La risposta inserita non è valida!":
+            for domanda in self.domande:
+                    risposta_lettere = domanda.risposte[risposta-1]
+                    if risposta_lettere == domanda._risposta_corretta:
+                        print("La risposta è corretta!")
+                        continuo = True
+                    else:
+                        print(f"La risposta è sbagliata! La risposta corretta è: {domanda._risposta_corretta}")
+                        continuo = False
+        return continuo
