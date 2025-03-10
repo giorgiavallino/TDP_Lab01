@@ -19,5 +19,15 @@ while livello_corrente <= livello_massimo and continuo == True:
     game.stampa_domanda_selezionata()
     risposta = game.inserimento_input()
     continuo = game.controllo_risposta(risposta)
-    if continuo == True:
+    if continuo:
         livello_corrente = livello_corrente + 1
+
+punteggio_finale = game.calcolo_punteggio(livello_corrente)
+print(f"Hai totalizzato {punteggio_finale} punti!")
+
+nome_giocatore = game.aggiunta_player()
+game.creazione_player(nome_giocatore, punteggio_finale)
+
+game.lettura_classifica()
+game.ordina_giocatori()
+game.riscrittura_classifica()

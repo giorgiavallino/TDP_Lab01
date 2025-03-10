@@ -1,10 +1,12 @@
 from domanda import Domanda
+from player import Player
 import random
 
 class Game:
 
-    def __init__(self, domande = []):
+    def __init__(self, domande = [], giocatori = []):
         self.domande = domande
+        self.giocatori = giocatori
 
     def __repr__(self):
         return f""
@@ -92,4 +94,41 @@ class Game:
                     else:
                         print(f"La risposta è sbagliata! La risposta corretta è: {domanda._risposta_corretta}")
                         continuo = False
+        else:
+            continuo = False
         return continuo
+
+    def calcolo_punteggio(self, livello):
+        punteggio_finale = livello
+        return punteggio_finale
+
+    def aggiunta_player(self):
+        nome = input("Inserisci il tuo nickname: ")
+        return nome
+
+    def creazione_player(self, nome, punteggio):
+        giocatore = Player(nome, punteggio)
+        self.giocatori.append(giocatore)
+        return self.giocatori
+
+    def lettura_classifica(self):
+        with open("punti.txt", "r") as file:
+            linee = file.readlines()
+            for linea in linee:
+                linea = linea.replace("\n", "")
+                parole = linea.split()
+                nome = parole[0]
+                punteggio = parole[1]
+                giocatore = Player(nome, punteggio)
+                self.giocatori.append(giocatore)
+        return self.giocatori
+
+    def ordina_giocatori(self):
+        giocatori_ordinati = sorted(self.giocatori, key=lambda x: x.punteggio, reverse=True)
+        self.giocatori = giocatori_ordinati
+        return self.giocatori
+
+    def riscrittura_classifica(self):
+        with open("punti.txt", "w") as file:
+            for giocatore in self.giocatori:
+                file.write(f"{giocatore.nome} {giocatore.punteggio}\n")
